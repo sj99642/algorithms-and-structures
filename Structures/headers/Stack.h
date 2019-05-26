@@ -10,7 +10,8 @@ typedef struct Stack {
     int stackPointer;
 } Stack;
 
-Stack* initialiseStack(int length);
+Stack* newStack(int length);
+Stack* initialiseStack(Stack* stack, int length);
 bool isStackEmpty(Stack* stack);
 bool isStackFull(Stack* stack);
 void pushStack(Stack* stack, int value);

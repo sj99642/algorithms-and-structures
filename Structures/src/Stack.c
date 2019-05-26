@@ -4,11 +4,20 @@
 #include <limits.h>
 
 /**
- * Initialises the given stack to zero
+ * Creates a new stack and initialises it
  */
-Stack* initialiseStack(int length)
+Stack* newStack(int length)
 {
     Stack* stack = (Stack*) malloc(sizeof(Stack));
+    return initialiseStack(stack, length);
+}
+
+
+/**
+ * Initialises the given stack to zero
+ */
+Stack* initialiseStack(Stack* stack, int length)
+{
     stack->values = (int*) malloc(length * sizeof(int));
     stack->maxLength = length;
     stack->stackPointer = 0;

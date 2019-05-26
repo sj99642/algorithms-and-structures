@@ -18,7 +18,8 @@ typedef struct Queue {
     int maxLength;
 } Queue;
 
-Queue* initialiseQueue(int length);
+Queue* newQueue(int length);
+Queue* initialiseQueue(Queue* queue, int length);
 bool isQueueEmpty(Queue* queue);
 bool isQueueFull(Queue* queue);
 void enqueue(Queue* queue, int value);
