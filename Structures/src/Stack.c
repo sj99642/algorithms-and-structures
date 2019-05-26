@@ -6,11 +6,13 @@
 /**
  * Initialises the given stack to zero
  */
-Stack* initialiseStack(Stack* stack, int length)
+Stack* initialiseStack(int length)
 {
+    Stack* stack = (Stack*) malloc(sizeof(Stack));
     stack->values = (int*) malloc(length * sizeof(int));
     stack->maxLength = length;
     stack->stackPointer = 0;
+    return stack;
 }
 
 /**

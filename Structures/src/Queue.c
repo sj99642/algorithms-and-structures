@@ -7,12 +7,14 @@
 #define NULL (void*) 0
 #endif
 
-Queue* initialiseQueue(Queue* queue, int length)
+Queue* initialiseQueue(int length)
 {
+    Queue* queue = (Queue*) malloc(sizeof(Queue));
     queue->values = (int*) malloc(length * sizeof(int));
     queue->start = 0;
     queue->nextEmpty = 0;
     queue->maxLength = length;
+    return queue;
 }
 
 bool isQueueEmpty(Queue* queue)
