@@ -224,3 +224,61 @@ BSTree* BST_insert(BSTree* addition, BSTree* tree) {
         return addition;
     }
 }
+
+/**
+ * Deletes the node represented by the root of the given tree. 
+ * Returns that tree.
+ */
+BSTree* BST_delete(BSTree* toRemove, BSTree* tree) {
+    if (toRemove == NULL) {
+        // Nothing to actually remove
+        return tree;
+    } else if (toRemove->left == NULL && toRemove->right == NULL) {
+        // No children, so safe to just get rid of
+        return _BST_replaceByIn(toRemove, NULL, tree);
+    } else if (toRemove->left == NULL) {
+        // Remove, pulling its right child up to its own place
+        return _BST_replaceByIn(toRemove, toRemove->right, tree);
+    } else if (toRemove->right == NULL) {
+        // Remove, pulling its left child up to its own place
+        return _BST_replaceByIn(toRemove, toRemove->left, tree);
+    } else {
+        // Parent of two children - has its own procedure.
+        return _BST_deleteParentOfTwo(toRemove, tree);
+    }
+}
+
+/**
+ * Used by BST_delete to replace a node with another
+ */
+BSTree* _BST_replaceByIn(BSTree* toRemove, BSTree* replacement, BSTree* tree) {
+    BSTree* parent = BST_parent(toRemove, tree);
+    if (toRemove == tree) {
+        tree = replacement;
+    } else if (toRemove == parent->left) {
+        // This node is to its parent's left
+        parent->left = replacement;
+    } else {
+        // This node is to its parent's right
+        parent->right = replacement;
+    }
+
+    return tree;
+}
+
+/**
+ * Used by BST_delete to deal with deleting a node that has two children
+ */
+BSTree* _BST_deleteParentOfTwo(BSTree* node, BSTree* tree) {
+    BSTree* replacement = BST_predecessor(node, tree);
+
+    // Overwrite this by its predecessor, then delete the predecessor
+    node->key = replacement->key;
+    node->datum = replacement->datum;
+
+    // This deletion will be easy. If we are in this function, then the
+    // node is a parent of two, so it has a left child. Its predecessor
+    // is the largest value in that left child's tree, so it will have no
+    // children. 
+    BST_delete(replacement, tree);
+}

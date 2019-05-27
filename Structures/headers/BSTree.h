@@ -12,8 +12,8 @@ typedef struct BSTree {
 
 BSTree* BST_empty();
 BSTree* BST_build(int key, void* datum, BSTree* left, BSTree* right);
-bool* BST_search(BSTree* tree, int key);
-int BST_count(BSTree*, int key);
+bool BST_search(BSTree* tree, int key);
+int BST_count(BSTree*);
 
 // Traversals
 void BST_printInOrder(BSTree* tree);
@@ -28,7 +28,7 @@ BSTree* BST_predecessor(BSTree* node, BSTree* tree);
 
 // Data modification
 BSTree* BST_insert(BSTree* addition, BSTree* tree);
-BSTree* BST_delete(int key, BSTree* tree);
+BSTree* BST_delete(BSTree* key, BSTree* tree);
 
 
 #endif
