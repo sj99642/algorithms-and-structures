@@ -3,12 +3,10 @@
 
 #include <stdbool.h>
 
-typedef struct BSTree {
-    int key;
-    void* datum;
-    BSTree* left;
-    BSTree* right;
-} BSTree;
+#include "BTree.h"
+
+// Alias for BTree for clarity
+typedef BTree BSTree;
 
 BSTree* BST_empty();
 BSTree* BST_build(int key, void* datum, BSTree* left, BSTree* right);

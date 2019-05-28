@@ -3,7 +3,7 @@
 #include "BSTree.h"
 
 #ifndef NULL
-#define NULL (int*) 0
+#define NULL (void*) 0
 #endif
 
 /**
