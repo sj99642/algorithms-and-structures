@@ -1,6 +1,5 @@
 package java_algorithms.sort;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 public class ShellSort extends SortingAlgorithm
