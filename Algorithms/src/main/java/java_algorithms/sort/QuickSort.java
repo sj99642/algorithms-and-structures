@@ -40,15 +40,15 @@ public class QuickSort extends SortingAlgorithm
         }
 
         // Choose a random pivot
-        int pivotIndex = ThreadLocalRandom.current().nextInt(end - start);
-        int pivotValue = copy[start + pivotIndex];
+        int pivotIndex = start + ThreadLocalRandom.current().nextInt(end - start);
+        int pivotValue = copy[pivotIndex];
 
         // Make a list of the items below and above the pivot
         ArrayList<Integer> belowPivot = new ArrayList<Integer>();
         ArrayList<Integer> abovePivot = new ArrayList<Integer>();
         for (int i = 0; i < end - start; i++) {
             // Don't include the pivot as either above or below itself
-            if (pivotIndex == i) {
+            if (pivotIndex == i + start) {
                 continue;
             }
 
@@ -77,17 +77,8 @@ public class QuickSort extends SortingAlgorithm
         }
 
         // Now run again on the left and right parts
-        copy = sort(arr, start, start + belowPivot.size());
-        copy = sort(arr, start + belowPivot.size() + 1, end);
-
-        // Print for debug
-        if (arr.length < 10) {
-            System.out.print("[");
-            for (int i = 0; i < arr.length - 1; i++) System.out.printf("%d, ", arr[i]);
-            System.out.printf("%d] - [%d..%d) -> [", arr[arr.length - 1], start, end);
-            for (int i = 0; i < copy.length - 1; i++) System.out.printf("%d, ", arr[i]);
-            System.out.printf("%d]\n", copy[copy.length - 1]);
-        }
+        copy = sort(copy, start, start + belowPivot.size());
+        copy = sort(copy, start + belowPivot.size() + 1, end);
 
         // Should now be done, so return
         return copy;
