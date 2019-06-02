@@ -1,6 +1,8 @@
 package java_algorithms.sort;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 
 public class ShellSort extends SortingAlgorithm
 {
@@ -24,24 +26,39 @@ public class ShellSort extends SortingAlgorithm
     @Override
     public int[] sort(int[] arr)
     {
-        // Make a copy so the first is unchanged
+        // Make a copy so the original is not changed
         int[] copy = Arrays.copyOf(arr, arr.length);
 
-        // An array of the gaps between subsets to perform insertion sort on
+        // Get a list of gaps
         int[] gaps = generateGapsArray(copy.length);
 
-        // Run the procedure for each gap size
+        // Loop whole thing with changing gaps
         for (int i = 0; i < gaps.length; i++) {
-            // Divide into subsets and run insertion sort on each
-            // There will be gaps[i] such subsets
-            // This runs from the biggest gap downwards
-            for (int j = gaps.length - 1; j >= 0; j--) {
-                // Take this subset and run insertion sort on it
-                int[] sorted = insertionSortSubset(copy, j, gaps[i]);
+            // Generate lists of indices and corresponding values, sort them and put them back
+            int gap = gaps[i];
 
-                // Put this back into the array
-                for (int k = 0; k < sorted.length; k++) {
-                    copy[j + (gaps[i] * k)] = sorted[k];
+            // Now the process will run for each offset in [0..gap)
+            for (int offset = 0; offset < gap; offset++) {
+                // Find the size of this subsequence
+                int subseqLength = copy.length / gap;
+                if (offset < copy.length % gap) {
+                    // This is to account for when the length does not divide directly
+                    subseqLength += 1;
+                }
+
+                // Generate the array of values
+                int[] values = new int[subseqLength];
+                for (int j = 0; j < subseqLength; j++) {
+                    // `offset + (j * gap)` finds the current index
+                    values[j] = copy[offset + (j * gap)];
+                }
+
+                // Do insertion sort on the values
+                values = insertionSort(values);
+
+                // Put them back in, corresponding to the indices
+                for (int j = 0; j < subseqLength; j++) {
+                    copy[offset + (j * gap)] = values[j];
                 }
             }
         }
@@ -49,39 +66,12 @@ public class ShellSort extends SortingAlgorithm
         return copy;
     }
 
-    public int[] insertionSortSubset(int[] arr, int start, int gap)
+    /**
+     * Performs an insertion sort. In this context, used for sorting subsequences. 
+     */
+    private int[] insertionSort(int[] arr) 
     {
-        // Takes a subset of arr, consisting of arr[start] and all items some multiple
-        // of gap after.
-
-        // Find the size of this subset
-        int subsetSize = arr.length / gap;
-
-        // This might not be big enough - one more may be needed if the start is small
-        // enough that there is an extra value on the end
-        if (arr.length - start > subsetSize) {
-            subsetSize += 1;
-        }
-
-        int[] subset = new int[subsetSize];
-
-        // Now run insertion sort
-        for (int sorted = 1; sorted < subset.length; sorted++) {
-            // Take the next item and move it backwards until it is in place
-            for (int current = sorted; current > 0; current--) {
-                // See if it needs swapping, or leave otherwise
-                if (subset[current] < subset[current - 1]) {
-                    int temp = subset[current];
-                    subset[current] = subset[current - 1];
-                    subset[current - 1] = temp;
-                } else {
-                    // In place
-                    break;
-                }
-            }
-        }
-
-        return subset;
+        return (new InsertionSort()).sort(arr);
     }
 
     /**
@@ -95,22 +85,27 @@ public class ShellSort extends SortingAlgorithm
      */
     private int[] generateGapsArray(int n)
     {
-        int[] gaps = new int[(int) Math.floor(0.2 * (Math.log(n)/Math.log(2) + 3))];
+        ArrayList<Integer> gaps = new ArrayList<Integer>();
 
         int k = 1;
 
         // Keep incrementing i and adding new ks until k gets too large
         for (int i = 1; k < n; i++) {
-            // Check we are still in the list's range
-            assert i < gaps.length : "New value of k is valid but array is too short";
-
             // Add this k
-            gaps[i-1] = k;
+            gaps.add(k);
 
             // Generate new k
             k = (int) (Math.pow(4, i) + 3 * Math.pow(2, i) + 1);
         }
 
-        return gaps;
+        // Convert to integer array
+        int[] ret = new int[gaps.size()];
+        Iterator<Integer> iterator = gaps.iterator();
+        for (int i = 0; i < ret.length; i++)
+        {
+            ret[i] = iterator.next().intValue();
+        }
+        
+        return ret;
     }
 }
