@@ -2,11 +2,11 @@
 #define BTree_H
 
 
-typedef struct {
+typedef struct BTree {
     int key;
     void* datum;
-    BTree* left;
-    BTree* right;
+    struct BTree* left;
+    struct BTree* right;
 } BTree;
 
 

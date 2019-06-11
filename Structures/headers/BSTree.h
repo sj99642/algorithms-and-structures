@@ -28,5 +28,9 @@ BSTree* BST_predecessor(BSTree* node, BSTree* tree);
 BSTree* BST_insert(BSTree* addition, BSTree* tree);
 BSTree* BST_delete(BSTree* key, BSTree* tree);
 
+// Internal use
+BSTree* _BST_replaceByIn(BSTree* toRemove, BSTree* replacement, BSTree* tree);
+BSTree* _BST_deleteParentOfTwo(BSTree* node, BSTree* tree);
+
 
 #endif

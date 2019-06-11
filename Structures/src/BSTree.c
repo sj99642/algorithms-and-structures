@@ -1,4 +1,6 @@
 #include <stdbool.h>
+#include <stdlib.h>
+#include <stdio.h>
 
 #include "BSTree.h"
 
@@ -50,9 +52,9 @@ BSTree* BST_find(BSTree* bst, int key) {
     } else if (bst->key == key) {
         return bst;
     } else if (key < bst->key) {
-        return BST_search(bst->left, key);
+        return BST_find(bst->left, key);
     } else {
-        return BST_search(bst->right, key);
+        return BST_find(bst->right, key);
     }
 }
 
@@ -216,9 +218,9 @@ BSTree* BST_insert(BSTree* addition, BSTree* tree) {
     }
 
     if (addition->key < tree->key) {
-        return insert(addition, tree->left);
+        return BST_insert(addition, tree->left);
     } else if (addition->key > tree->key) {
-        return insert(addition, tree->right);
+        return BST_insert(addition, tree->right);
     } else {
         // They are equal, so overwrite this one
         return addition;
