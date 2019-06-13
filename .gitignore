@@ -182,3 +182,23 @@ install_manifest.txt
 compile_commands.json
 CTestTestfile.cmake
 _deps
+
+# A few more from maven
+Algorithms/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst
+Algorithms/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst
+Algorithms/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst
+Algorithms/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst
+Algorithms/target/surefire-reports/TEST-java_algorithms.sort.MergeSortTest.xml
+Algorithms/target/surefire-reports/TEST-java_algorithms.AppTest.xml
+Algorithms/target/surefire-reports/TEST-java_algorithms.numbers.EuclidsAlgorithmTest.xml
+Algorithms/target/surefire-reports/TEST-java_algorithms.sort.BubbleSortTest.xml
+Algorithms/target/surefire-reports/TEST-java_algorithms.sort.DutchNationalFlagTest.xml
+Algorithms/target/surefire-reports/TEST-java_algorithms.sort.InsertionSortTest.xml
+Algorithms/target/surefire-reports/TEST-java_algorithms.sort.QuickSortTest.xml
+Algorithms/target/surefire-reports/java_algorithms.AppTest.txt
+Algorithms/target/surefire-reports/java_algorithms.numbers.EuclidsAlgorithmTest.txt
+Algorithms/target/surefire-reports/java_algorithms.sort.BubbleSortTest.txt
+Algorithms/target/surefire-reports/java_algorithms.sort.DutchNationalFlagTest.txt
+Algorithms/target/surefire-reports/java_algorithms.sort.InsertionSortTest.txt
+Algorithms/target/surefire-reports/java_algorithms.sort.MergeSortTest.txt
+Algorithms/target/surefire-reports/java_algorithms.sort.QuickSortTest.txt
