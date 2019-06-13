@@ -46,3 +46,36 @@ def test_queues():
     # _ 5 _ _ _
     assert lib.dequeue(queue) == 5, "Item dequeued should be 5"
     assert lib.isQueueEmpty(), "Queue should be empty"
+
+def test_stacks():
+    stack = lib.newStack(5)
+
+    # _ _ _ _ _
+    assert lib.isStackEmpty(stack), "Stack should be empty"
+    assert not lib.isStackFull(stack), "Stack should not be full"
+    lib.pushStack(stack, 1)
+    # 1 _ _ _ _
+    assert lib.stackTop(stack) == 1, "Top of stack should be 1"
+    assert not lib.isStackEmpty(stack), "Stack should not be empty after checking top element"
+    lib.pushStack(stack, 2)
+    # 1 2 _ _ _
+    lib.pushStack(stack, 3)
+    # 1 2 3 _ _
+    lib.pushStack(stack, 4)
+    # 1 2 3 4 _
+    lib.pushStack(stack, 5)
+    # 1 2 3 4 5
+    assert lib.isStackFull(stack), "Stack should be full"
+    assert not lib.isStackEmpty(stack), "Stack should not be empty"
+    assert lib.stackTop(stack) == 5, "Top of stack should be 5"
+    assert lib.stackPop(stack) == 5, "Should have popped 5"
+    # 1 2 3 4 _
+    assert lib.stackPop(stack) == 4, "Should have popped 4"
+    # 1 2 3 _ _
+    assert lib.stackPop(stack) == 3, "Should have popped 3"
+    # 1 2 _ _ _
+    assert lib.stackPop(stack) == 2, "Should have popped 2"
+    # 1 _ _ _ _
+    assert lib.stackPop(stack) == 1, "Should have popped 1"
+    # _ _ _ _ _
+    assert lib.isStackEmpty(stack), "Stack should be empty"
