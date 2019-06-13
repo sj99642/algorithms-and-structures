@@ -12,5 +12,6 @@ LinkedList* addFirst(LinkedList* list, LinkedList* newItem);
 LinkedList* deleteByKey(LinkedList* list, int key);
 LinkedList* insert(LinkedList* list, LinkedList* item, int place);
 LinkedList* printList(LinkedList* list);
+LinkedList* listAsArray(LinkedList* list);
 
 #endif
