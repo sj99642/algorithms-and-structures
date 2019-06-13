@@ -9,16 +9,21 @@
  * array.
  */
 typedef struct {
-    int length;
+    int arrLength;
+    int size;
     int* keys;
     void** data;
 } BHeapArray;
 
+// Creating heaps
+BHeapArray* BHA_createEmpty(int length);
+void BHA_initialise(BHeapArray* heap, int length);
+
+// Reading data
 void* BHA_findMin(BHeapArray* heap);
-int BHA_findDepth(BHeapArray* heap);
 
 
 // Data modification
-BHeapArray* BHA_insert(BHeapArray* node, BHeapArray* heap);
+BHeapArray* BHA_insert(BHeapArray* heap, int key, void* data);
 
 #endif
