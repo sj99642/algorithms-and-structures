@@ -182,3 +182,8 @@ install_manifest.txt
 compile_commands.json
 CTestTestfile.cmake
 _deps
+
+# A few more from maven
+Algorithms/target/*
+Algorithms/target/
+Algorithms/target
