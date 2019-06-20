@@ -310,7 +310,7 @@ public class Graph<V extends Vertex>
      * Takes the given vertex, and looks in the graph for new connections given the new
      * addition to the MST.
      */
-    private void mstPrimUpdate(PriorityQueue<Edge<V>> priQ, V newVertex, Map<V, V> parents, Map<V, V> keys)
+    private void mstPrimUpdate(PriorityQueue<Edge<V>> priQ, V newVertex, Map<V, V> parents, Map<V, Double> keys)
     {
         // Loop through the neighbours to the new vertex
         for (V adjVertex : this.vertexNeighbours(newVertex)) {
