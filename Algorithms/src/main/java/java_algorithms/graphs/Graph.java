@@ -26,6 +26,38 @@ public class Graph<V extends Vertex>
         return edges;
     }
 
+    /**
+     * Lists all of the vertices that start at the given vertex
+     */
+    public List<Edge<V>> edgesStartingAtVertex(V vertex)
+    {
+        List<Edge<V>> edgesFound = new ArrayList<Edge<V>>();
+        // List edges and see if this is the start
+        for (Edge<V> edge : edges) {
+            if (edge.start.equals(vertex)) {
+                edgesFound.add(edge);
+            } 
+        }
+
+        return edges;
+    }
+
+    /**
+     * Lists all of the vertices that end at the given vertex
+     */
+    public List<Edge<V>> edgesEndingAtVertex(V vertex)
+    {
+        List<Edge<V>> edgesFound = new ArrayList<Edge<V>>();
+        // List edges and see if this is the end
+        for (Edge<V> edge : edges) {
+            if (edge.end.equals(vertex)) {
+                edgesFound.add(edge);
+            } 
+        }
+
+        return edges;
+    }
+
     public List<V> vertexNeighbours(V vertex)
     {
         List<V> neighboursFound = new ArrayList<V>();
@@ -39,6 +71,41 @@ public class Graph<V extends Vertex>
         }
 
         return neighboursFound;
+    }
+
+    /**
+     * Returns a map, with the keys being each neighbour of this vertex, and the edge being the edge getting there
+     */
+    public Map<V, Edge<V>> neighboursAndEdges(V vertex)
+    {
+        Map<V, Edge<V>> map = new HashMap<V, Edge<V>>();
+
+        // List edges, and if this is in it, make a note
+        for (Edge<V> edge : edges) {
+            if (edge.start.equals(vertex)) {
+                map.put(edge.end, edge);
+            } else if (edge.end.equals(vertex)) {
+                map.put(edge.start, edge);
+            }
+        }
+
+        return map;
+    }
+
+    /**
+     * Returns the edge that connects the two vertices
+     */
+    public Edge<V> edgeBetween(V v1, V v2)
+    {
+        for (Edge<V> edge : edges) {
+            if (edge.start.equals(v1) && edge.end.equals(v2)) {
+                return edge;
+            } else if (edge.start.equals(v2) && edge.end.equals(v1)) {
+                return edge;
+            }
+        }
+
+        return null;
     }
 
     /**
@@ -169,5 +236,98 @@ public class Graph<V extends Vertex>
 
         // Should have now traversed the graph
         return traversal;
+    }
+
+    /**
+     * Uses Prim's algorithm to produce a minimum spanning tree of this graph, starting
+     * with the first vertex in the list.
+     */
+    public Graph<V> minimumSpanningTreePrim()
+    {
+        // Avoid an error if vertices[0] does not exist
+        if (vertices.size() == 0) {
+            return new Graph<V>();
+        } else {
+            return minimumSpanningTreePrim(vertices.get(0));
+        }
+    }
+
+    /**
+     * Uses Prim's algorithm to produce a minimum spanning tree of this graph, starting from
+     * the given vertex. 
+     * 
+     * Prim's algorithm starts with a single vertex as a seed, and grows the tree out from there.
+     * 
+     * @return Minimum Spanning Tree of this graph
+     */
+    public Graph<V> minimumSpanningTreePrim(V startVertex)
+    {
+        // The minimum spanning tree to be built up
+        Graph<V> mst = new Graph<V>();
+
+        // The maps to hold the current parent and weight of each edge
+        Map<V, V> parents = new HashMap<V, V>();
+        Map<V, Double> keys = new HashMap<V, Double>();
+
+        // Fill all parents with null and keys with the max possible value
+        for (V vertex : vertices) {
+            parents.put(vertex, null);
+            keys.put(vertex, Double.POSITIVE_INFINITY);
+        }
+
+        // Set key for the starting vertex to 0
+        keys.put(startVertex, 0);
+
+        // Create a priority queue, to be able to efficiently find the smallest key
+        PriorityQueue<V> priQ = new PriorityQueue<V>(new Comparator<V>() {
+            public double compare(V v1, V v2) {
+                return keys.get(v1) - keys.get(v2);
+            }
+        });
+
+        // Add all of the vertices to the priority queue
+        for (V v : vertices) {
+            priQ.add(v);
+        }
+
+        // For as long as something is left, keep processing
+        while (priQ.size() > 0) {
+            // Get the closest vertex
+            V newVertex = priQ.poll();
+
+            // Add the vertex to the graph, along with its edge
+            mst.vertices.add(newVertex);
+            mst.edges.add(edgeBetween(newVertex, parents.get(newVertex)));
+
+            mstPrimUpdate(priQ, newVertex, parents, keys);
+        }
+
+        return mst;
+    }
+
+    /**
+     * Used by minimumSpanningTreePrim() to update the parents and keys of the vertices.
+     * Takes the given vertex, and looks in the graph for new connections given the new
+     * addition to the MST.
+     */
+    private void mstPrimUpdate(PriorityQueue<Edge<V>> priQ, V newVertex, Map<V, V> parents, Map<V, V> keys)
+    {
+        // Loop through the neighbours to the new vertex
+        for (V adjVertex : this.vertexNeighbours(newVertex)) {
+            // If this is not in the tree, and has a shorter distance than that currently recorded,
+            // then update its parent and key
+            double distance = directDistance(newVertex, adjVertex);
+            if (priQ.contains(adjVertex) && distance < keys.get(adjVertex)) {
+                // Set the tree's new vertex to be the parent of this vertex
+                parents.put(adjVertex, newVertex);
+
+                // Set the key to be the distance between the two
+                keys.put(adjVertex, distance);
+
+                // Removing and re-adding the vertex
+                priQ.remove(adjVertex);
+                priQ.add(adjVertex);
+            }
+        }
     }
 }
