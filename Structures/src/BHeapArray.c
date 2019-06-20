@@ -1,4 +1,5 @@
 #include <limits.h>
+#include <stdbool.h>
 #include <malloc.h>
 
 #include "BHeapArray.h"
@@ -46,6 +47,15 @@ void* BHA_findMin(BHeapArray* heap)
 }
 
 /**
+ * Returns the key of the root
+ */
+int BHA_findMinKey(BHeapArray* heap)
+{
+    // Root node is at the beginning of the array
+    return heap->keys[0];
+}
+
+/**
  * Returns whether the heap is empty
  */
 bool BHA_isEmpty(BHeapArray* heap) 
@@ -81,7 +91,7 @@ void BHA_insert(BHeapArray* heap, int key, void* data)
     // Keep going up, as long as:
     //   a) This is not the root; and
     //   b) The parent has a smaller key than this node
-    while (index != 0 && heap->keys[PARENT(index)] < heap->keys[index]) {
+    while (index != 0 && heap->keys[PARENT(index)] > heap->keys[index]) {
         // Swap with the parent
         BHA_swapItems(heap, PARENT(index), index);
     }
@@ -125,6 +135,8 @@ IVPair BHA_deleteMin(BHeapArray* heap)
             BHA_swapItems(heap, index, RIGHT_CHILD(index));
         }
     }
+
+    return root;
 }
 
 /**
@@ -143,4 +155,22 @@ void BHA_swapItems(BHeapArray* heap, int index1, int index2)
     // Swap the data
     heap->data[index1] = heap->data[index2];
     heap->data[index2] = tempData;
+}
+
+// Utility functions for testing
+
+/**
+ * Returns the key from the given pair.
+ */
+int _BHA_getKeyFromIVPair(IVPair pair)
+{
+    return pair.key;
+}
+
+/**
+ * Returns the datum from the given pair. 
+ */
+void* _BHA_getDatumFromIVPair(IVPair pair)
+{
+    return pair.datum;
 }
