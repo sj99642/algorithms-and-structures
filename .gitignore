@@ -184,6 +184,13 @@ CTestTestfile.cmake
 _deps
 
 # A few more from maven
-Algorithms/target/*
 Algorithms/target/
-Algorithms/target
+Algorithms/pom.xml.tag
+Algorithms/pom.xml.releaseBackup
+Algorithms/pom.xml.versionsBackup
+Algorithms/pom.xml.next
+Algorithms/release.properties
+Algorithms/dependency-reduced-pom.xml
+Algorithms/buildNumber.properties
+Algorithms/.mvn/timing.properties
+Algorithms/.mvn/wrapper/maven-wrapper.jar
