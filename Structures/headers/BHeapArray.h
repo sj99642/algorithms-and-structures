@@ -15,15 +15,29 @@ typedef struct {
     void** data;
 } BHeapArray;
 
+typedef struct {
+    int key;
+    void* datum;
+} IVPair;
+
 // Creating heaps
 BHeapArray* BHA_createEmpty(int length);
 void BHA_initialise(BHeapArray* heap, int length);
 
 // Reading data
 void* BHA_findMin(BHeapArray* heap);
+int BHA_findMinKey(BHeapArray* heap);
+bool BHA_isEmpty(BHeapArray* heap);
+bool BHA_isFull(BHeapArray* heap);
 
 
 // Data modification
-BHeapArray* BHA_insert(BHeapArray* heap, int key, void* data);
+void BHA_insert(BHeapArray* heap, int key, void* data);
+IVPair BHA_deleteMin(BHeapArray* heap);
+void BHA_swapItems(BHeapArray* heap, int index1, int index2);
+
+// Functions for testing (reading structures)
+int _BHA_getKeyFromIVPair(IVPair);
+void* _BHA_getDatumFromIVPair(IVPair);
 
 #endif

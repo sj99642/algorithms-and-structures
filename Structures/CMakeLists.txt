@@ -4,7 +4,7 @@ project(CStructures VERSION 0.1.0)
 include(CTest)
 enable_testing()
 
-add_library(CStructures SHARED CStructures.c src/LinkedList.c src/Queue.c src/Stack.c src/BSTree.c)
+add_library(CStructures SHARED CStructures.c src/LinkedList.c src/Queue.c src/Stack.c src/BSTree.c src/BHeapArray.c)
 include_directories(headers)
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
