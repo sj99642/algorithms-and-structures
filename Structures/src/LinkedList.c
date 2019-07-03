@@ -98,3 +98,22 @@ LinkedList* LL_printList(LinkedList* list)
     }
     printf("\n");
 }
+
+/**
+ * Seeks through the list and returns the value corresponding to the given key
+ */
+void* LL_getByKey(LinkedList* list, int key)
+{
+    while (list != NULL) {
+        // See if this is a match and return
+        if (list->key == key) {
+            return list->value;
+        }
+
+        // Progress down the list
+        list = list->next;
+    }
+
+    // If no matching value is found
+    return NULL;
+}

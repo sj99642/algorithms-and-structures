@@ -13,5 +13,6 @@ LinkedList* LL_deleteByKey(LinkedList* list, int key);
 LinkedList* LL_insert(LinkedList* list, LinkedList* item, int place);
 LinkedList* LL_printList(LinkedList* list);
 LinkedList* LL_listAsArray(LinkedList* list);
+void* LL_getByKey(LinkedList* list, int key);
 
 #endif
