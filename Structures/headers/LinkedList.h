@@ -7,11 +7,11 @@ typedef struct LinkedList {
     void* value;
 } LinkedList;
 
-LinkedList* addLast(LinkedList* list, LinkedList* newItem);
-LinkedList* addFirst(LinkedList* list, LinkedList* newItem);
-LinkedList* deleteByKey(LinkedList* list, int key);
-LinkedList* insert(LinkedList* list, LinkedList* item, int place);
-LinkedList* printList(LinkedList* list);
-LinkedList* listAsArray(LinkedList* list);
+LinkedList* LL_addLast(LinkedList* list, LinkedList* newItem);
+LinkedList* LL_addFirst(LinkedList* list, LinkedList* newItem);
+LinkedList* LL_deleteByKey(LinkedList* list, int key);
+LinkedList* LL_insert(LinkedList* list, LinkedList* item, int place);
+LinkedList* LL_printList(LinkedList* list);
+LinkedList* LL_listAsArray(LinkedList* list);
 
 #endif

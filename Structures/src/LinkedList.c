@@ -10,7 +10,7 @@
 /**
  * Goes all the way to the end of the list and adds the item.
  */
-LinkedList* addLast(LinkedList* list, LinkedList* newItem)
+LinkedList* LL_addLast(LinkedList* list, LinkedList* newItem)
 {
     // If this list is already null, just return the item as the first item
     if (list == NULL) return newItem;
@@ -28,7 +28,7 @@ LinkedList* addLast(LinkedList* list, LinkedList* newItem)
 /**
  * Adds something to the start of the list.
  */
-LinkedList* addFirst(LinkedList* list, LinkedList* newItem)
+LinkedList* LL_addFirst(LinkedList* list, LinkedList* newItem)
 {
     newItem->next = list;
     return newItem;
@@ -37,7 +37,7 @@ LinkedList* addFirst(LinkedList* list, LinkedList* newItem)
 /**
  * Removes the item with the given key in the list.
  */
-LinkedList* deleteByKey(LinkedList* list, int key)
+LinkedList* LL_deleteByKey(LinkedList* list, int key)
 {
     // If already NULL, nothing can be done
     if (list == NULL) return list;
@@ -57,7 +57,7 @@ LinkedList* deleteByKey(LinkedList* list, int key)
 /**
  * Puts the given item at the given place in the list. 
  */
-LinkedList* insert(LinkedList* list, LinkedList* item, int place)
+LinkedList* LL_insert(LinkedList* list, LinkedList* item, int place)
 {
     // Special case: if the item is to go at the start
     if (place == 0) {
@@ -89,7 +89,7 @@ LinkedList* insert(LinkedList* list, LinkedList* item, int place)
 /**
  * Prints out the keys in the list
  */
-LinkedList* printList(LinkedList* list)
+LinkedList* LL_printList(LinkedList* list)
 {
     while (list != NULL)
     {
