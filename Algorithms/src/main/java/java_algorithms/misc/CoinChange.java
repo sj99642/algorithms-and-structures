@@ -10,9 +10,11 @@ import java.util.Set;
  */
 public class CoinChange
 {
+    private Map<Integer, Integer> previouslyFound = new HashMap<Integer, Integer>();
+    private Set<Integer> coins;
+
     public static void main(String[] args)
     {
-        CoinChange alg = new CoinChange();
         int amount;
         HashSet<Integer> coins;
 
@@ -28,10 +30,16 @@ public class CoinChange
             return;
         }
 
-        System.out.println(alg.runAlgorithm(amount, coins, new HashMap<Integer, Integer>()));
+        CoinChange alg = new CoinChange(coins);
+        System.out.println(alg.runAlgorithm(amount));
     }
 
-    public int runAlgorithm(int amount, Set<Integer> coins, Map<Integer, Integer> known)
+    public CoinChange(Set<Integer> coins)
+    {
+        this.coins = coins;
+    }
+
+    public int runAlgorithm(int amount)
     {
         if (amount == 0) {
             return 0;
@@ -41,9 +49,19 @@ public class CoinChange
             return 1;
         }
 
-        int minFound = Integer.MAX_VALUE;
-        for (int i = 0; i < Math.ceil((double) amount / 2); i++) {
+        if (previouslyFound.containsKey(amount)) {
+            return previouslyFound.get(amount);
+        }
 
+        // Looping, run the algorithm. Ask the question for all numbers
+        // from 0 up to here, then find the smallest valued number bond. 
+        int minFound = Integer.MAX_VALUE;
+        for (int i = 0; i < amount / 2; i++) {
+            // All ways of making it to here
+            int x = runAlgorithm(i) + runAlgorithm(amount - i);
+            if (x < minFound) {
+                minFound = x;
+            }
         }
 
         return minFound;
