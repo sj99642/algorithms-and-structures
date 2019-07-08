@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 import java.util.Stack;
+import java.util.PriorityQueue;
+import java.util.Comparator;
 
 public class Graph<V extends Vertex>
 {
@@ -106,6 +108,21 @@ public class Graph<V extends Vertex>
         }
 
         return null;
+    }
+
+    /**
+     * Gives the direct distance between the two vertices. 
+     */
+    public double directDistance(V v1, V v2) {
+        // Get the edge between the two vertices
+        Edge<V> connection = edgeBetween(v1, v2);
+        
+        // Return the length
+        if (connection == null) {
+            return Double.POSITIVE_INFINITY;
+        } else {
+            return connection.weight;
+        }
     }
 
     /**
@@ -276,14 +293,17 @@ public class Graph<V extends Vertex>
         }
 
         // Set key for the starting vertex to 0
-        keys.put(startVertex, 0);
+        keys.put(startVertex, (double) 0);
 
         // Create a priority queue, to be able to efficiently find the smallest key
-        PriorityQueue<V> priQ = new PriorityQueue<V>(new Comparator<V>() {
-            public double compare(V v1, V v2) {
-                return keys.get(v1) - keys.get(v2);
-            }
-        });
+        // PriorityQueue<V> priQ = new PriorityQueue<V>(vertices.size(), new Comparator<V>() {
+        //     public double compare(V v1, V v2) {
+        //         return keys.get(v1) - keys.get(v2);
+        //     }
+        // });
+
+
+        PriorityQueue<V> priQ = new PriorityQueue<V>(vertices.size(), Comparator.comparing(keys::get));
 
         // Add all of the vertices to the priority queue
         for (V v : vertices) {
@@ -310,7 +330,7 @@ public class Graph<V extends Vertex>
      * Takes the given vertex, and looks in the graph for new connections given the new
      * addition to the MST.
      */
-    private void mstPrimUpdate(PriorityQueue<Edge<V>> priQ, V newVertex, Map<V, V> parents, Map<V, Double> keys)
+    private void mstPrimUpdate(PriorityQueue<V> priQ, V newVertex, Map<V, V> parents, Map<V, Double> keys)
     {
         // Loop through the neighbours to the new vertex
         for (V adjVertex : this.vertexNeighbours(newVertex)) {
