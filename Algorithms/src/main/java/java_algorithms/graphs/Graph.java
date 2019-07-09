@@ -350,4 +350,69 @@ public class Graph<V extends Vertex>
             }
         }
     }
+
+    /**
+     * Gets the distance between the two vertices using dijkstra's algorithm
+     */
+    public double dijkstraDistanceBetween(V from, V to)
+    {
+        return dijkstraTable(from).get(to);
+    }
+
+    /**
+     * Runs Dijkstra's algorithm starting at the given vertex, and returns a map of vertices
+     * to their shortest distance from the start vertex. 
+     */
+    public Map<V, Double> dijkstraTable(V from)
+    {
+        if (!vertices.contains(from)) {
+            throw new IllegalArgumentException("Given vertex must be a member of this graph");
+        }
+
+        // Maintain the current way we would get to each vertex, and how long it is
+        Map<V, V> parents = new HashMap<V, V>();
+        Map<V, Double> distances = new HashMap<V, Double>();
+
+        // At the start, each item has no parent and is infinitely far away from the start
+        for (V vertex : this.vertices) {
+            parents.put(vertex, null);
+            distances.put(vertex, (double) 0);
+        }
+
+        // The start vertex has distance 0 away
+        distances.put(from, (double) 0);
+
+        // Make a priority queue of vertices
+        PriorityQueue<V> priQ = new PriorityQueue<V>(vertices.size(), Comparator.comparing(distances::get));
+
+        // Add all the keys to the priority queue
+        for (V vertex : this.vertices) {
+            priQ.add(vertex);
+        }
+
+        // For as long as something is left, keep processing
+        while (priQ.size() > 0) {
+            // Get the nearest vertex to the tree
+            V vertex = priQ.poll();
+
+            // Update all nodes adjacent to this one
+            // That is, if getting to them via this node would be quicker than the way we have already found,
+            // set this to be the parent and update their distance
+            for (V adjacent : vertexNeighbours(vertex)) {
+                double newDistance = distances.get(vertex) + directDistance(vertex, adjacent);
+
+                if (priQ.contains(adjacent) && newDistance < distances.get(adjacent)) {
+                    // New, closer way found
+                    parents.put(adjacent, vertex);
+                    distances.put(adjacent, newDistance);
+
+                    // Remove from the queue and add again - needed for new placement
+                    priQ.remove(adjacent);
+                    priQ.add(adjacent);
+                }
+            }
+        }
+
+        return distances;
+    }
 }
