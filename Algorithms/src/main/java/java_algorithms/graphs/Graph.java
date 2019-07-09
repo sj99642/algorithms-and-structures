@@ -376,7 +376,7 @@ public class Graph<V extends Vertex>
         // At the start, each item has no parent and is infinitely far away from the start
         for (V vertex : this.vertices) {
             parents.put(vertex, null);
-            distances.put(vertex, (double) 0);
+            distances.put(vertex, Double.POSITIVE_INFINITY);
         }
 
         // The start vertex has distance 0 away
